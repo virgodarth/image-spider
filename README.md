@@ -1,5 +1,5 @@
 # Description
-Use
+Extract and download images from websites by input keywords
 
 # Available website
 - unsplash_com
@@ -20,7 +20,7 @@ Use
 - When prompted press Enter to continue: Press [ENTER] to continue or Ctrl-c to cancel adding it.
 
 3. Once the repository is enabled, install python 3.8
-sudo apt install python3.8
+- sudo apt install python3.8
 
 ## Set up enviroment
 1. Install python virtualenv
