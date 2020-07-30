@@ -1,0 +1,11 @@
+fake-useragent==0.1.11
+ipython==7.16.1
+jupyter-client==6.1.6
+jupyter-core==4.6.3
+lxml==4.5.2
+notebook==6.0.3
+pickleshare==0.7.5
+Pillow==7.2.0
+python-dateutil==2.8.1
+python-magic==0.4.18
+Scrapy==2.2.1

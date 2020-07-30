@@ -17,7 +17,7 @@ class BaseSpider(scrapy.Spider, ABC):
 
     def download_attach_file(self, response):
         filename = response.meta.get('filename')
-        tagname = response.meta.get('tagname').replace('%20', '_')
+        keyword = response.meta.get('keyword').replace('%20', '_')
         
         buffer = response.body
         try:
@@ -26,7 +26,7 @@ class BaseSpider(scrapy.Spider, ABC):
             return
         filename += f'.{ext}'
         
-        absolute_path = os.path.join(self.storage_path, tagname)
+        absolute_path = os.path.join(self.storage_path, keyword)
         pathlib.Path(absolute_path).mkdir(parents=True, exist_ok=True)
         
         # save orignal image

@@ -11,27 +11,30 @@ from spider_app.spiders import BaseSpider
 class ImageSpiderSpider(BaseSpider):
     name = 'unsplash_spider'
     allowed_domains = ['unsplash.com']
-    start_url = 'https://www.reshot.com/search/{tagname}'
+    start_url = 'https://www.reshot.com/search/{keyword}'
 
-    tags = (
-        'baby'
-        'children',
-        'middle%20aged%20man',
-        'middle%20aged%20woman'
-        'old%20man',
-        'old%20woman'
+    keywords = (
+        'baby',
+        # 'children',
+        # 'middle%20aged%20man',
+        # 'middle%20aged%20woman',
+        # 'old%20man',
+        # 'old%20woman',
     )
-    base_next_page = 'https://unsplash.com/napi/search/photos?query={tagname}&xp=&per_page=20&page={page}'
+    base_next_page = 'https://unsplash.com/napi/search/photos?query={keyword}&xp=&per_page=20&page={page}'
 
     storage_path = os.path.join(settings.BASE_STORAGE, name)
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
+    def __init__(self, keywords=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if keywords:
+            self.keywords = keywords.split(',')
+            self.keywords = [keyword.replace(' ', '%20') for keyword in self.keywords]
 
     def start_requests(self):
-        for tag in self.tags:
-            url = self.start_url.format(tagname=tag)
-            next_page = self.base_next_page.format(tagname=tag, page=1)
+        for keyword in self.keywords:
+            url = self.start_url.format(keyword=keyword)
+            next_page = self.base_next_page.format(keyword=keyword, page=1)
             yield scrapy.Request(
                 url=next_page,
                 method='GET',
@@ -40,11 +43,11 @@ class ImageSpiderSpider(BaseSpider):
                     'Referer': url,
                     'Content-Type': 'application/json'
                 },
-                meta={'tagname': tag, 'page': 1, 'url': url}
+                meta={'keyword': keyword, 'page': 1, 'url': url}
             )
     
     def parse(self, response):
-        tagname = response.meta['tagname']
+        keyword = response.meta['keyword']
         page = response.meta['page']
         url = response.meta['url']
         
@@ -66,14 +69,14 @@ class ImageSpiderSpider(BaseSpider):
                 headers={
                     'Referer': url
                 },
-                meta={'tagname': tagname, 'filename': filename}
+                meta={'keyword': keyword, 'filename': filename}
             )
 
         # go to next page
         page += 1
         if page > total_pages:
             return
-        next_page = self.base_next_page.format(tagname=tagname, page=page)
+        next_page = self.base_next_page.format(keyword=keyword, page=page)
         yield scrapy.Request(
                 url=next_page,
                 method='GET',
@@ -82,5 +85,5 @@ class ImageSpiderSpider(BaseSpider):
                     'Referer': url,
                     'Content-Type': 'application/json'
                 },
-                meta={'tagname': tagname, 'page': page, 'url': url}
+                meta={'keyword': keyword, 'page': page, 'url': url}
             )
