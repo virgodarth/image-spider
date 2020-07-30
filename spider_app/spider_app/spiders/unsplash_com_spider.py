@@ -12,7 +12,7 @@ class ImageSpiderSpider(BaseSpider):
     name = 'unsplash_spider'
     allowed_domains = ['unsplash.com']
     start_url = 'https://www.reshot.com/search/{keyword}'
-
+    
     keywords = (
         'baby',
         # 'children',
@@ -24,6 +24,7 @@ class ImageSpiderSpider(BaseSpider):
     base_next_page = 'https://unsplash.com/napi/search/photos?query={keyword}&xp=&per_page=20&page={page}'
 
     storage_path = os.path.join(settings.BASE_STORAGE, name)
+    quality_image = 'regular'
 
     def __init__(self, keywords=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -58,7 +59,7 @@ class ImageSpiderSpider(BaseSpider):
          
         total_pages = data.get('total_pages', 0)
         for img in data.get('results', []):
-            img_url = img.get('urls', {}).get('full')
+            img_url = img.get('urls', {}).get(self.quality_image)
             if img_url is None:
                 continue
             filename = img.get('id') or datetime.now().timestamp()
