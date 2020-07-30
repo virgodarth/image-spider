@@ -50,5 +50,10 @@ sudo apt install python3.8
 - crapy list
 
 3. choose and run spider
-- scrap crawl -a tags=*your_keywords_are_seperated_by_comma* *your_selected_spider*
-- Ex: scrap crawl -a tags=*flower,friend,babay* *unsplash_spider*
+- scrapy crawl -a tags=*your_keywords_are_seperated_by_comma* *your_selected_spider*
+- Ex: scrapy crawl -a tags=*flower,friend,babay* *unsplash_spider*
+
+# Default Config
+- Watch log file: tail -f -n 100 ./spider_app/logs
+- Download folder: ls ./spider_app/spider_app/download/
+- Total downloaded images: find ./spider_app/download -type f | wc -l
