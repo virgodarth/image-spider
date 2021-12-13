@@ -2,7 +2,7 @@ fake-useragent==0.1.11
 ipython==7.16.1
 jupyter-client==6.1.6
 jupyter-core==4.6.3
-lxml==4.5.2
+lxml==4.6.5
 notebook==6.0.3
 pickleshare==0.7.5
 Pillow==7.2.0
