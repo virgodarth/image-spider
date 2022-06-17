@@ -8,4 +8,4 @@ pickleshare==0.7.5
 Pillow==7.2.0
 python-dateutil==2.8.1
 python-magic==0.4.18
-Scrapy==2.2.1
+Scrapy==2.6.1
