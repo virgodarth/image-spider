@@ -1,5 +1,5 @@
 fake-useragent==0.1.11
-lxml==4.5.2
+lxml==4.9.1
 Pillow==7.2.0
 python-dateutil==2.8.1
 python-magic==0.4.18
